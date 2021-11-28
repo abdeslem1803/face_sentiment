@@ -31,10 +31,9 @@ def sentiment_from_faces(frame, face_model, mask_detect_model):
             face=cv2.resize(face,(48,48))
             face=img_to_array(face)
             face=preprocess_input(face)
-
             faces.append(face)
             coordinations.append((startX, startY, endX, endY))
-            faces = np.array(faces, dtype="float32")
-            predictions.append(mask_detect_model.predict(faces, batch_size=32))
-            return (coordinations, predictions)
+    faces2 = np.array(faces, dtype="float32")
+    predictions = mask_detect_model.predict(faces2, batch_size=32)
+    return (coordinations, predictions)
 
