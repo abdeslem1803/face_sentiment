@@ -29,13 +29,13 @@ face_detection_model = cv2.dnn.readNet(deployPrototxt,deployPrototxt_weight)
 
 classifier =load_model('emotion_detection.h5')
 classifier.load_weights('model_weight.h5')
-
+#load our trained model
 
 # In[7]:
 
 
 video_stream=VideoStream(src=0).start()
-
+#activate video stream
 while True:
     #grab the frame from the threaded video stream and 
     frame=video_stream.read()
@@ -44,11 +44,11 @@ while True:
     
     
     try:
-        #detect faces in the frame and preict if they are waring masks or not
+        #detect faces in the frame
         #extract coordination of faces
         (coordination,sentiment_face_detection)=sentiment_from_faces(frame,face_detection_model,classifier)
         resultat= ["angry","disgust","fear","happy","neutral","sad","surprise"]
-        
+        #we have 7 sentiments
     #loop over the detected face and their corrosponding coordinations
         for (box,prediction) in zip(coordination,sentiment_face_detection):
             
@@ -57,7 +57,7 @@ while True:
             sentiment=np.argmax(prediction)
             
             
-            #determine the class label and color we will use to draw the bounding box and text
+            #determine the class label we will use to draw the bounding box and text
             label=resultat[sentiment] 
             color=(0,255,0) 
             #display the label and bounding boxes
