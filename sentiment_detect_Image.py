@@ -16,16 +16,17 @@ import numpy as np
 
 classifier =load_model('emotion_detection.h5')
 classifier.load_weights('model_weight.h5')
-
+#load our trained model
 deployPrototxt = "deploy.prototxt"
 deployPrototxt_weight = "res10_300x300_ssd_iter_140000.caffemodel"
-face_detection_model = cv2.dnn.readNet(deployPrototxt,deployPrototxt_weight)
 
+face_detection_model = cv2.dnn.readNet(deployPrototxt,deployPrototxt_weight)
+#load model that detect faces
 frame = cv2.imread("pic.jpg")
 
 image = frame.copy()
 
-#detect faces in the frame and preict if their sentiment
+#detect faces in the frame and pridect their sentiment
     #extract coordination of faces
 (coordination,sentiment_face_detection)=sentiment_from_faces(image,face_detection_model,classifier)
 for (box,prediction) in zip(coordination,sentiment_face_detection):
@@ -33,7 +34,7 @@ for (box,prediction) in zip(coordination,sentiment_face_detection):
     sentiment=np.argmax(prediction)
     resultat= ["angry","disgust","fear","happy","neutral","sad","surprise"]
      
-        #determine the class label and color we will use to draw the bounding box and text
+        #determine the class label and we draw the bounding box and text
     label=resultat[sentiment]
     color=(0,255,0) 
             
